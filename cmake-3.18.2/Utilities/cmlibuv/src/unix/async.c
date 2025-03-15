@@ -34,9 +34,11 @@
 #include <unistd.h>
 #include <sched.h>  /* sched_yield() */
 
+/*
 #ifdef __linux__
 #include <sys/eventfd.h>
 #endif
+*/
 
 static void uv__async_send(uv_loop_t* loop);
 static int uv__async_start(uv_loop_t* loop);
@@ -206,7 +208,7 @@ static int uv__async_start(uv_loop_t* loop) {
   if (loop->async_io_watcher.fd != -1)
     return 0;
 
-#ifdef __linux__
+#ifdef __linuxHK__
   err = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
   if (err < 0)
     return UV__ERR(errno);

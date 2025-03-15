@@ -90,7 +90,7 @@ int uv__platform_loop_init(uv_loop_t* loop) {
    * a.k.a. Lollipop. Since EPOLL_CLOEXEC is an alias for O_CLOEXEC on all
    * architectures, we just use that instead.
    */
-#if defined(__ANDROID_API__) && __ANDROID_API__ < 21
+#if !defined(__ANDROID_API__) && __ANDROID_API__ < 21
   fd = -1;
   errno = ENOSYS;
 #else
@@ -293,7 +293,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
         abort();
 
     if (no_epoll_wait != 0 || (sigmask != 0 && no_epoll_pwait == 0)) {
-#if defined(__ANDROID_API__) && __ANDROID_API__ < 21
+#if !defined(__ANDROID_API__) && __ANDROID_API__ < 21
       nfds = -1;
       errno = ENOSYS;
 #else
